@@ -19,6 +19,17 @@ module.exports = {
     filename: 'app.js',
     publicPath: defaultSettings.publicPath
   },
+  //需要先在default.js里先添加postcss-loader,才能使postcss被调用
+  postcss: function() {
+    return [
+      require('autoprefixer')({
+        browsers: ['last 2 versions', 'ie >= 8']
+      }),
+      require('postcss-assets')({
+        loadPaths:['../images/','../fonts/']
+      })
+    ];
+  },
   devServer: {
     contentBase: './src/',
     historyApiFallback: true,
