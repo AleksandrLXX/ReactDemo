@@ -7,10 +7,8 @@ require('styles//ControlUtil.scss');
 class ControlUtilComponent extends React.Component {
   render() {
     return (
-      <div className="controlutil-component">
-        Please edit src/components///ControlUtilComponent.js to update this component!
-      </div>
-    );
+      <span className="controller-unit is-center"></span>
+    )
   }
 }
 

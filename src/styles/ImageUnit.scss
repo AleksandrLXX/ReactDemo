@@ -1,3 +1,23 @@
-.imageunit-component {
-  border: 1px dashed #f00;
+.img-figure {
+    position: absolute;
+    width: 320px;
+    height: 360px;
+    margin: 0;
+    padding: 40px;
+    background-color: #fff;
+    box-sizing: border-box;
+    cursor: pointer;
+    &.is-inverse {
+        transform: translate(320px) rotateY(180deg);
+    }
+    @at-root{
+        figcaption {
+            text-align: center;
+            .img-title {
+                margin: 20px 0 0 0;
+                color: #999;
+                font-size: 16px;
+            }   
+        }
+    }
 }

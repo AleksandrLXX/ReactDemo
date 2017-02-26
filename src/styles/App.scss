@@ -1,23 +1,34 @@
 /* Base Application Styles */
-body {
-  color: #fff;
-  background: #222;
-  background-image: url('../images/crab.png');
+@mixin dis_full{
+  width: 100%;
+  height: 100%;
+}
+html,body{
+  @include dis_full;
 }
 
-.index img {
-  margin: 40px auto;
-  border-radius: 4px;
-  background: #fff;
-
-  display: block;
+#app {
+   @include dis_full;
+   background-color: #222;
+  .stage{
+    @include dis_full;
+    position:relative;
+    .imgs-sec{
+      @include dis_full;
+      position:relative;
+      background-color: #ddd;
+    }
+    .controller-sec{
+      position: absolute;
+      bottom:80px;
+      left:0;
+      width: 100%;
+      text-align: center;
+      z-index: 101;
+      // 调试用
+      // height: 100px;
+      // background-color: red;
+    }  
+  }
 }
 
-.index .notice {
-  margin: 20px auto;
-  padding: 15px 0;
-  text-align: center;
-  border: 1px solid #000;
-  border-width: 1px 0;
-  background: #666;
-}
