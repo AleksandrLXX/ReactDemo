@@ -35,11 +35,17 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-
+        &.is-spin{
+            -webkit-animation:spin 4s linear 0s infinite;
+            animation:spin 4s linear 0s ease;
+        }
         &.is-inverse {
             background-color: #555;
-
             transform: rotateY(180deg);
+            &.is-spin{
+            -webkit-animation:spin-inverse 4s linear 0s infinite;
+            animation:spin-inverse 4s linear 0s infinite;
+        }
         }
     }
 }
