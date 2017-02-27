@@ -1,5 +1,6 @@
 require('normalize.css/normalize.css');
 require('styles/App.scss');
+require('styles/keyframes.css')
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -27,7 +28,7 @@ function get30DegRandom() {
 /**
  * [imageDatas json-loader导入后为一个数组]
  */
-let imageDatas = require('../data/imageDatas.json');
+let imageDatas = require('../data/morassImageDatas.json');
 
 /**
  * imageDatas 处理后结构为 [{imgURL,fileName,title,desc},{}]
@@ -69,6 +70,49 @@ class AppComponent extends React.Component {
         };
         this.state={
             imgsArrangeArr:[]
+        }
+    }
+    /**
+     * [center description]
+     * @param  {[num]} centerIndex [要居中的imageUnit编号]
+     * @return {[function]}        [使centerIndex居中的函数]
+     */
+    center(centerIndex){
+        return ()=>{this.rearrange(centerIndex)}
+        //相当于
+        //let that=this;
+        // return function(){
+        //    that.rearrange(centerIndex);
+        // }
+    }
+ /**
+  * [inverse ]
+  * @param  {[num]} inverseIndex      [要翻转的imageUnit编号]
+  * @return {[function]}              [使inverseIndex翻转的函数]
+  */
+    inverse(inverseIndex){
+        return ()=>{
+            let newImgsArrangeArr=null;
+            newImgsArrangeArr=this.state.imgsArrangeArr;
+            newImgsArrangeArr[inverseIndex].isInverse=!newImgsArrangeArr[inverseIndex].isInverse;
+            this.setState({
+                imgsArrangeArr:newImgsArrangeArr
+            })
+        }
+    }
+    /**
+     * [spin description]
+     * @param  {[num]} spinIndex [要旋转的imageUnit编号]
+     * @return {[type]}          [使spinIndex旋转的函数]
+     */
+    spin(spinIndex){
+        return ()=>{
+            let newImgsArrangeArr=null;
+            newImgsArrangeArr=this.state.imgsArrangeArr;
+            newImgsArrangeArr[spinIndex].isSpin=!newImgsArrangeArr[spinIndex].isSpin;
+            this.setState({
+                imgsArrangeArr:newImgsArrangeArr
+            })
         }
     }
     /**
@@ -254,12 +298,15 @@ class AppComponent extends React.Component {
                     },
                     rotate: 0,
                     isInverse: false,
-                    isCenter: false
+                    isCenter: false,
+                    isSpin:false
                 };
             }
             imageUnits.push( <ImageUnit data = {imageData}
-            key = {index} ref={'imgUnit'+index} arrange={this.state.imgsArrangeArr[index]}/>);
-            controlUtils.push( <ControlUtil key = {index}/>)
+            key = {index} ref={'imgUnit'+index} arrange={this.state.imgsArrangeArr[index]} 
+            center={this.center(index)} inverse={this.inverse(index)} spin={this.spin(index)}/>);
+            controlUtils.push( <ControlUtil key = {index} arrange={this.state.imgsArrangeArr[index]}
+             center={this.center(index)} inverse={this.inverse(index)} spin={this.spin(index)}/>);
         });
             return ( 
                 < section className = 'stage' ref='stage'>

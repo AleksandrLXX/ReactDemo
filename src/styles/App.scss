@@ -17,6 +17,7 @@ html,body{
       @include dis_full;
       position:relative;
       background-color: #ddd;
+      perspective:1800px;
     }
     .controller-sec{
       position: absolute;
