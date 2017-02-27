@@ -17,7 +17,7 @@
         z-index: 11;
          &.is-spin{
             -webkit-animation:spin 4s linear 0s infinite;
-            animation:spin 4s linear 0s ease;
+            animation:spin 4s linear 0s infinite;
         }
     }
     &.is-inverse {

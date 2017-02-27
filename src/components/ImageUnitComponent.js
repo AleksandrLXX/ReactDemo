@@ -6,18 +6,27 @@ require('styles//ImageUnit.scss');
 class ImageUnitComponent extends React.Component {
 	constructor(props){
 		super(props);
+    this.timer=null;
 	}
 	//[danger]感觉是个回调陷阱;回调的时候this默认指向null，所以必须要把this传进来，使this指向ImageUnitComponent
-	handleClick(e){
-		this.props.arrange.isCenter?this.props.inverse():this.props.center();
-		e.preventDefault();
-        e.stopPropagation();
-	}
-	handleDoubleClick(e){
-		this.props.spin();
-		e.preventDefault();
-        e.stopPropagation();
-	}
+  //[bug]双击时触发单击事件。[bug]图片旋转时,单击停止后，下次单击时直接旋转的bug
+  //业务逻辑:单击时如果组件在旋转，那么仅停止旋转，如果未旋转，判断是否居中，如果已居中，则进行反转。
+  //         双击时进行旋转或停止旋转逻辑。
+    handleClick(e){
+      clearTimeout(this.timer);
+      this.timer=setTimeout(()=>{
+        if(this.props.arrange.isSpin){this.props.spin();}
+        else this.props.arrange.isCenter?this.props.inverse():this.props.center();
+      },200);
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    handleDoubleClick(e){
+      clearTimeout(this.timer);
+      this.props.spin();
+      e.stopPropagation();
+      e.preventDefault();
+    }
   	render() {
   		let styleObj={},
   			that=this,

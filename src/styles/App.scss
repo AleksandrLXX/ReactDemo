@@ -13,6 +13,7 @@ html,body{
   .stage{
     @include dis_full;
     position:relative;
+    overflow: hidden;
     .imgs-sec{
       @include dis_full;
       position:relative;
