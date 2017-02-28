@@ -1,9 +1,11 @@
 # ReactDemo
-A react demo based on the course by materliu. imooc:http://www.imooc.com/learn/507;github:https://github.com/materliu/gallery-by-react. 
-with ES6 and yoeman generator-react-webpack v4.0.1.
+A react demo based on the course by materliu. </br>
+imooc:http://www.imooc.com/learn/507 </br>
+github:https://github.com/materliu/gallery-by-react. 
+
 
 ## How to use
-1. download source code from https://github.com/AleksandrLXX/ReactDemo.git.
+1. download source code 
 2. npm install
 
 ## Commands for project
