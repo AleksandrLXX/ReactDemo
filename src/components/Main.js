@@ -2,7 +2,10 @@ require('normalize.css/normalize.css');
 require('styles/App.scss');
 require('styles/keyframes.css')
 
-import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actionCreaters from '../actions'
+import React, {Component, PropTypes}  from 'react';
 import ReactDOM from 'react-dom';
 import ImageUnit from './ImageUnitComponent';
 import ControlUtil from './ControlUtilComponent';
@@ -25,25 +28,13 @@ function get30DegRandom() {
   return ((Math.random() > 0.5 ? '' : '-') + Math.ceil(Math.random() * 30));
 }
 
-/**
- * [imageDatas json-loader导入后为一个数组]
- */
-let imageDatas = require('../data/morassImageDatas.json');
-
-/**
- * imageDatas 处理后结构为 [{imgURL,fileName,title,desc},{}]
- */
-imageDatas = imageDatas.map((imageData) => {
-  imageData.imgURL = require('../images/' + imageData.fileName);
-  return imageData;
-});
 
 /**
  *由于没有redux，所有数据和action都由AppComponent管理，分发.
  *Constant 图片的取值范围,
  *图片排布后有四个位置区域 center leftSec rightSec topSec
  */
-class AppComponent extends React.Component {
+class AppComponent extends Component {
     constructor(props) {
         super(props);
         this.Constant = {
@@ -68,9 +59,6 @@ class AppComponent extends React.Component {
               topSec: [0, 0]
             }
         };
-        this.state={
-            imgsArrangeArr:[]
-        }
     }
     /**
      * [center description]
@@ -92,12 +80,14 @@ class AppComponent extends React.Component {
   */
     inverse(inverseIndex){
         return ()=>{
-            let newImgsArrangeArr=null;
-            newImgsArrangeArr=this.state.imgsArrangeArr;
-            newImgsArrangeArr[inverseIndex].isInverse=!newImgsArrangeArr[inverseIndex].isInverse;
-            this.setState({
-                imgsArrangeArr:newImgsArrangeArr
-            })
+            // let newImgsArrangeArr=null;
+            // newImgsArrangeArr=this.state.imgsArrangeArr;
+            // newImgsArrangeArr[inverseIndex].isInverse=!newImgsArrangeArr[inverseIndex].isInverse;
+            // this.setState({
+            //     imgsArrangeArr:newImgsArrangeArr
+            // })
+            this.props.inverse(inverseIndex);
+            // this.setState({});
         }
     }
     /**
@@ -107,12 +97,14 @@ class AppComponent extends React.Component {
      */
     spin(spinIndex){
         return ()=>{
-            let newImgsArrangeArr=null;
-            newImgsArrangeArr=this.state.imgsArrangeArr;
-            newImgsArrangeArr[spinIndex].isSpin=!newImgsArrangeArr[spinIndex].isSpin;
-            this.setState({
-                imgsArrangeArr:newImgsArrangeArr
-            })
+            // let newImgsArrangeArr=null;
+            // newImgsArrangeArr=this.state.imgsArrangeArr;
+            // newImgsArrangeArr[spinIndex].isSpin=!newImgsArrangeArr[spinIndex].isSpin;
+            // this.setState({
+            //     imgsArrangeArr:newImgsArrangeArr
+            // })
+            this.props.spin(spinIndex);
+            // this.setState({});
         }
     }
     /**
@@ -122,7 +114,7 @@ class AppComponent extends React.Component {
      * 并使未居中的图片isCenter为false
      */
     rearrange(centerIndex){
-        let imgsArrangeArr = this.state.imgsArrangeArr,
+        let imgsArrangeArr = this.props.imgsArrangeArr,
             Constant = this.Constant,
             centerPos = Constant.centerPos,
             hPosRange = Constant.hPosRange,
@@ -199,9 +191,8 @@ class AppComponent extends React.Component {
 
         imgsArrangeArr.splice(centerIndex, 0, imgsArrangeCenterArr[0]);
 
-        this.setState({
-            imgsArrangeArr: imgsArrangeArr
-        });
+        this.props.center(imgsArrangeArr);
+        // this.setState({});
     }
     /**
      * [bug]getInitialState已经被禁用  在constructor函数中设置this.state
@@ -280,32 +271,22 @@ class AppComponent extends React.Component {
     this.Constant.vPosRange.rightSec[1] = stageH - halfImgH;
     this.Constant.vPosRange.topSec[0] = -halfImgH;
     this.Constant.vPosRange.topSec[1] = halfStageH - halfImgH * 3;
-
-
     this.rearrange(0);
-
     }
+    // 可以筛选render的条件。
+    // shouldComponentUpdate(nextProps, nextState) {
+    //   console.log('shouldComponentUpdate'); 
+    //   console.log(this.props.imgsArrangeArr !== nextProps.imgsArrangeArr?'true':'false');
+    //   return this.props.imgsArrangeArr !== nextProps.imgsArrangeArr;
+    // }
     render() {
         let imageUnits = [];
         let controlUtils = [];
-        imageDatas.forEach((imageData, index) => {
-            //  imgsArrangeArr[index]初始化
-            if (!this.state.imgsArrangeArr[index]) {
-                this.state.imgsArrangeArr[index] = {
-                    pos: {
-                        left: 0,
-                        top: 0
-                    },
-                    rotate: 0,
-                    isInverse: false,
-                    isCenter: false,
-                    isSpin:false
-                };
-            }
+        this.props.imageDatas.forEach((imageData, index) => {
             imageUnits.push( <ImageUnit data = {imageData}
-            key = {index} ref={'imgUnit'+index} arrange={this.state.imgsArrangeArr[index]} 
+            key = {index} ref={'imgUnit'+index} arrange={this.props.imgsArrangeArr[index]} index={index}
             center={this.center(index)} inverse={this.inverse(index)} spin={this.spin(index)}/>);
-            controlUtils.push( <ControlUtil key = {index} arrange={this.state.imgsArrangeArr[index]}
+            controlUtils.push( <ControlUtil key = {index} arrange={this.props.imgsArrangeArr[index]}
              center={this.center(index)} inverse={this.inverse(index)} spin={this.spin(index)}/>);
         });
             return ( 
@@ -321,5 +302,18 @@ class AppComponent extends React.Component {
     }
 }
 
-            AppComponent.defaultProps = {};
-            export default AppComponent;
+AppComponent.defaultProps = {};
+
+//将state.counter绑定到props
+function mapStateToProps(state) {
+  return {...state}
+}
+
+//将action的所有方法绑定到props上,bindActionCreators可以批量导入actionCreater，设置键名为函数名，并在外层包裹dispatch方法
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreaters, dispatch); 
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);

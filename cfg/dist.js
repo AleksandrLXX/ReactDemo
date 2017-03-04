@@ -38,5 +38,6 @@ config.module.loaders.push({
     [ path.join(__dirname, '/../src') ]
   )
 });
-
+//修改在webpack过程中的通用路径
+config.output.publicPath='./assets/';
 module.exports = config;

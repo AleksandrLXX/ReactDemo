@@ -1,9 +1,8 @@
 'use strict';
-
-import React from 'react';
+import React, {Component, PropTypes}  from 'react';
 require('styles//ImageUnit.scss');
 
-class ImageUnitComponent extends React.Component {
+class ImageUnitComponent extends Component {
 	constructor(props){
 		super(props);
     this.timer=null;
@@ -72,7 +71,12 @@ class ImageUnitComponent extends React.Component {
 ImageUnitComponent.displayName = 'ImageUnitComponent';
 
 // Uncomment properties you need
-// ImageUnitComponent.propTypes = {};
+ImageUnitComponent.propTypes = {
+    arrange:PropTypes.object.isRequired,
+    center:PropTypes.func.isRequired,
+    inverse:PropTypes.func.isRequired,
+    spin:PropTypes.func.isRequired
+};
 // ImageUnitComponent.defaultProps = {};
 
 export default ImageUnitComponent;
