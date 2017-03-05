@@ -2,7 +2,7 @@ import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './components/Main';
+import App from './components/App';
 import configureStore from './stores/configureStore.js'
 // Render the main component into the dom
 const store=configureStore();

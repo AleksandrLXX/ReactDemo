@@ -1,9 +1,9 @@
-import {CENTER,INVERSE,SPIN,SELECT} from '../types';
+import {CENTER,INVERSE,SPIN,SELECT,SETCONSTANT} from '../types';
 
-export function center(data){
+export function center(index){
 	return	{
 		type : CENTER,
-		data
+		index
 	}
 }
 
@@ -24,5 +24,20 @@ export function spin(index){
 export function select(){
 	return	{
 		type : SELECT
+	}
+}
+/**
+ * [setConstant description]
+ * @param {[obj]} data {
+        stageW:stageW,
+        stageH:stageH,
+        imgW:imgW,
+        imgH:imgH
+    }
+ */
+export function setConstant(data){
+	return	{
+		type : SETCONSTANT,
+		data
 	}
 }
