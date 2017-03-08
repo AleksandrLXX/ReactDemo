@@ -78,6 +78,8 @@
     "react-document-meta": "^2.0.3",
     "react-dom": "^15.0.0",
     "react-redux": "^4.4.5",
+    "react-router": "^3.0.2",
+    "react-router-redux": "^4.0.8",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0"
   }

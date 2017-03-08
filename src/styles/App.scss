@@ -11,7 +11,9 @@ html,body{
    @include dis_full;
    background-color: #222;
   .stage{
-    @include dis_full;
+    /*@include dis_full;*/
+    width: 100%;
+    height: 880px;
     position:relative;
     overflow: hidden;
     .imgs-sec{

@@ -1,6 +1,6 @@
 import {CENTER,INVERSE,SPIN,SELECT,SETCONSTANT} from '../types';
 import {combineReducers} from 'redux';
-
+import { routerReducer } from 'react-router-redux'
 /**
  * [getRangeRandom 获取区间内的一个随机值]
  * @param  {[num]} low  [小值]
@@ -263,6 +263,6 @@ function layout(state={imgsArrangeArr:initialImgsArrangeArr,layoutConstant:initi
  * [rootReducer description]
  * 使用redux的combineReducers方法将所有reducer打包起来
  */
-const rootReducer = combineReducers({imageDatas,layout});
+const rootReducer = combineReducers({imageDatas,layout,routing:routerReducer});
 
 export default rootReducer;

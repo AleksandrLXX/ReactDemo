@@ -1,6 +1,6 @@
 require('normalize.css/normalize.css');
 require('styles/App.scss');
-require('styles/keyframes.css')
+require('styles/keyframes.css');
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
